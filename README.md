@@ -22,7 +22,65 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+
+## Introduction
+
+Sample Nest.JS Dependency Injection Webserver - With Decoupling Services Using Interfaces
+
+@see https://jasonwhite.xyz/posts/2020/10/20/nestjs-dependency-injection-decoupling-services-with-interfaces/
+
+#### Main.ts App Bootstrap Entry Point
+
+```
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(3000);
+}
+bootstrap();
+```
+
+#### First Level AppModule configure all submobules 
+
+`src/app.module.ts`
+```
+import { GreetingModule } from './greeting/greeting.module';
+@Module({
+  imports: [GreetingModule],
+  controllers: [AppController],
+  providers: [AppService],
+})
+```
+
+#### GreetingModule Submodule configuration with interface/implementation substitution
+
+This module demonstrates how to substitute either `ProfessionalGreetingService` or `PersonalGreetingService` as the implementation
+
+```
+import { ProfessionalGreetingService } from './professional-greeting.service';
+import { PersonalGreetingService } from './personal-greeting.service';
+import { GREETING_SERVICE } from './greeting-service.interface';
+import { GreetingController } from './greeting.controller';
+
+@Module({
+  providers: [
+    {
+      // You can switch useClass to different implementation
+      useClass: PersonalGreetingService,
+      provide: GREETING_SERVICE
+    }
+  ],
+  controllers: [
+    GreetingController
+  ]
+})
+```
+
+
+
+## Nest.js More Info
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
