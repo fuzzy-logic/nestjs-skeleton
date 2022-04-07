@@ -31,7 +31,8 @@ Sample Nest.JS Dependency Injection Webserver - With Decoupling Services Using I
 
 #### Main.ts App Bootstrap Entry Point
 
-```
+`src/main.ts`
+```typescript
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
@@ -45,7 +46,7 @@ bootstrap();
 #### First Level AppModule configure all submobules 
 
 `src/app.module.ts`
-```
+```typescript
 import { GreetingModule } from './greeting/greeting.module';
 @Module({
   imports: [GreetingModule],
@@ -58,7 +59,8 @@ import { GreetingModule } from './greeting/greeting.module';
 
 This module demonstrates how to substitute either `ProfessionalGreetingService` or `PersonalGreetingService` as the implementation
 
-```
+`src/greeting/greeting.module.ts`
+```typescript
 import { ProfessionalGreetingService } from './professional-greeting.service';
 import { PersonalGreetingService } from './personal-greeting.service';
 import { GREETING_SERVICE } from './greeting-service.interface';
